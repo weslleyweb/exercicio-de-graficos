@@ -1,0 +1,136 @@
+# ==========================================
+# IMPORTAR BIBLIOTECAS
+# ==========================================
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+# ==========================================
+# LER O DATASET
+# ==========================================
+
+df = pd.read_csv(r'C:\Users\wex\Downloads\ecommerce_preparados.csv')
+
+print(df.head())
+print(df.columns)
+print(df.info())
+
+
+# ==========================================
+# HISTOGRAMA
+# Distribuição dos preços
+# ==========================================
+
+plt.figure(figsize=(8,5))
+
+plt.hist(df['Preço'].dropna(), bins=20)
+
+plt.title('Distribuição de Preços')
+plt.xlabel('Preço')
+plt.ylabel('Quantidade')
+
+plt.show()
+
+
+# ==========================================
+# GRÁFICO DE DISPERSÃO
+# Relação entre Nota e Preço
+# ==========================================
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(df['Nota'], df['Preço'])
+
+plt.title('Relação entre Nota e Preço')
+plt.xlabel('Nota do Produto')
+plt.ylabel('Preço')
+
+plt.show()
+
+
+# ==========================================
+# MAPA DE CALOR
+# Correlação entre variáveis numéricas
+# ==========================================
+
+plt.figure(figsize=(10,6))
+
+sns.heatmap(df.corr(numeric_only=True),
+            annot=True,
+            cmap='coolwarm')
+
+plt.title('Mapa de Correlação')
+
+plt.show()
+
+
+# ==========================================
+# GRÁFICO DE BARRAS
+# Produtos por temporada
+# ==========================================
+
+plt.figure(figsize=(8,5))
+
+df['Temporada'].value_counts().plot(kind='bar', color='skyblue')
+
+plt.title('Quantidade de Produtos por Temporada')
+plt.xlabel('Temporada')
+plt.ylabel('Quantidade')
+
+plt.show()
+
+
+# ==========================================
+# GRÁFICO DE PIZZA
+# Distribuição por gênero
+# ==========================================
+
+genero = df['Gênero'].value_counts()
+
+plt.figure(figsize=(6,6))
+
+plt.pie(genero,
+        labels=genero.index,
+        autopct='%1.1f%%',
+        startangle=90)
+
+plt.title('Distribuição de Produtos por Gênero')
+
+plt.show()
+
+
+# ==========================================
+# GRÁFICO DE DENSIDADE
+# Distribuição da nota dos produtos
+# ==========================================
+
+plt.figure(figsize=(8,5))
+
+sns.kdeplot(df['Nota'].dropna(), fill=True)
+
+plt.title('Densidade das Notas dos Produtos')
+plt.xlabel('Nota')
+plt.ylabel('Densidade')
+
+plt.show()
+
+
+# ==========================================
+# GRÁFICO DE REGRESSÃO
+# Relação entre Avaliações e Nota
+# ==========================================
+
+plt.figure(figsize=(8,5))
+
+sns.regplot(x='N_Avaliações',
+            y='Nota',
+            data=df)
+
+plt.title('Relação entre Número de Avaliações e Nota')
+plt.xlabel('Número de Avaliações')
+plt.ylabel('Nota')
+
+plt.show()
+
